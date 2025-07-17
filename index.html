@@ -1,79 +1,111 @@
-
+<!DOCTYPE html>
 <html lang="fr">
 <head>
+   <!-- Encodage des caractères en UTF-8, supporte les caractères spéciaux français -->
   <meta charset="UTF-8">
   <title>Kyntus Maroc</title>
   <link rel="stylesheet" href="libs/bootstrap.min.css">
-  <link rel="stylesheet" href="libs/fontawesome.min.css">
+  <!-- Import des icônes FontAwesome -->
+  <link rel="stylesheet" href="libs/fontawesome.min.css">  
   <link rel="stylesheet" href="style.css">
   <!--le lien de google icons-->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
 </head>
-<body>
-    <div class="d-flex">
+<body >
+    <!--site navbar -->
+    <nav class="site-nav">
+        <!-- Barre de navigation en haut de page (visible sur petits écrans) -->
+         <!-- Bouton pour ouvrir/fermer la sidebar (menu latéral) -->
+        <button class="sidebar-toggle">
+            <!-- Icône "menu" des Google Material Symbols -->
+            <span class="material-symbols-rounded"> menu </span>
+        </button>
+    </nav>
+
+    <!-- Conteneur principal qui regroupe sidebar + contenu -->
+    <div class="container">
         <!--sidbar-->
-        <aside class="sidebar">
-            <!--sidebar header-->
-            <header class="sidebar-header">
-                <h4 class="mb-4">Kyntus Maroc</h4>
-                <img src="log.png" alt="CodingNeplal" class ="header-logo">
-                <button class="sidebar-toggle">
-                    <span class="material-symbols-rounded">chevron_left</span>
-                </button>
+        <!-- Menu latéral (sidebar) au départ en mode réduit (collapsed) -->
+        <aside class="sidebar collapsed " >
+        <!--sidebar header-->
+        <header class="sidebar-header">
+            <img src="log.png" alt="CodingNeplal" class ="header-logo">
+            <!-- Bouton pour réduire/agrandir la sidebar --><!-- Icône flèche à gauche -->
+            <button class="sidebar-toggle">
+                <span class="material-symbols-rounded">chevron_left</span>
+            </button>
                 
                 
-            </header>
-            <div class="sidebar-content">
-                <!--Search form-->
-                <form action="#" class="search-form">
-                    <span class="material-symbols-rounded">search</span>
-                    <input type="search" placeholder="Search" required>
-                </form>
+        </header>
+        <div class="sidebar-content">
+
+            <!--Search form-->
+            <!-- Formulaire de recherche dans la sidebar -->
+            <form action="#" class="search-form">
+                <!-- Icône loupe -->
+                <span class="material-symbols-rounded">search</span>
+                <!-- Champ de recherche avec placeholder -->
+                <input type="search" placeholder="Search" required>
+            </form>
                 
-                <!--MENU List-->
-                <ul class="menu-list">
-                <!--e mot dashboard à l’intérieur du <span> indique l’icône choisie-->
-                  <li class="menu-item">
-                      <a href="" class="menu-link active">
-                          <span class="material-symbols-rounded">Apps</span>
-                          <span class="menu-label">Espace</span>
-                      </a>
-                  </li>
-                  <li>
-                      <a href="" class="menu-link">
-                          <span class="material-symbols-rounded">space_dashboard</span>
-                          <span class="menu-label">Dashboard</span>
-                      </a>
-                  </li>
-                  <li class="menu-item">
-                      <a href="" class="menu-link">
-                          <span class="material-symbols-rounded">analytics</span>
-                          <span class="menu-label">Analytics</span>
-                      </a>
-                  </li>
-                  <li class="menu-item">
-                      <a href="" class="menu-link">
-                          <span class="material-symbols-rounded">edit_square</span>
-                          <span class="menu-label">Saisie Mesure</span>
-                      </a>
-                  </li>
-                  <li class="menu-item">
-                      <a href="" class="menu-link">
-                          <span class="material-symbols-rounded">group</span>
-                          <span class="menu-label">Utilisateurs</span>
-                      </a>
-                  </li>
+            <!--MENU List-->
+            <ul class="menu-list">
+            <!--e mot dashboard à l’intérieur du <span> indique l’icône choisie-->
+                <li class="menu-item">
+                    <!-- Lien actif (page actuelle) -->
+                    <a href="" class="menu-link active">
+                        <!-- Icône "analytics" -->
+                        <span class="material-symbols-rounded">analytics</span>
+                        <!-- Texte du menu -->
+                        <span class="menu-label">Analytics</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="" class="menu-link" data-page="dash">
+                        <span class="material-symbols-rounded">space_dashboard</span>
+                        <span class="menu-label">Dashboard</span>
+                    </a>
+                </li>
+                <li class="menu-item dropdown">
+                    <a href="#" id="link-espace" class="menu-link">
+                        <span class="material-symbols-rounded">apps</span>
+                        <span class="menu-label">Espace</span>
+                    </a>
+                    
+                    <div class="submenu">
+                        <!-- Sous-menu, caché par défaut -->
+                        <a href="#" class="submenu-link" data-page="SAV">SAV</a>
+                        <a href="#" class="submenu-link" data-page="RAC">RAC</a>
+                        <a href="#" class="submenu-link" data-page="TOUS">TOUS</a>
+                    </div>
+                </li>
+                <li class="menu-item">
+                    <a href="" class="menu-link">
+                        <span class="material-symbols-rounded">edit_square</span>
+                        <span class="menu-label">Saisie Mesure</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="" class="menu-link">
+                        <span class="material-symbols-rounded">group</span>
+                        <span class="menu-label">Utilisateurs</span>
+                    </a>
+                </li>
                 </ul>
             </div>
             <!--sidebar footer-->
             <div class="sidebar-footer">
+                <!-- bouton pour changer le thème (clair/sombre) -->
                 <button class="theme-toggle">
-                    <div class="theme-label"> <!--pour l'icone-->
-                        <span class="material-symbols-rounded">dark_mode</span> 
+                    <div class="theme-label"> 
+                        <!--pour l'icone-->
+                        <span class="theme-icon material-symbols-rounded">dark_mode</span> 
                         <!--pour le texte de l'icone-->
                         <span class="theme-text">Dark Mode</span>
                     </div>
+                    <!-- Fond du bouton toggle (interrupteur) -->
                     <div class="theme-toggle-track">
+                        <!-- Bouton rond qui glisse -->
                         <div class="theme-toggle-indicator"></div>
 
                     </div>
@@ -82,27 +114,23 @@
             
         </aside>
 
-        <!--CONTENUE PRINCIPALE
-        <main class="content">
-            <h2>Bienvenue</h2>
-               ligne de cartes avec Bootstrap row:ligne et "g-3":espaces entre colonnes
+        <!--contenu de la partie a droite-->
+        <div class="main-content" id ="contenu">
+            
+            
+            <!--
+            <h1 class="page-title">Dashboard Overview</h1>
+            <p class="card">Welcome to your dashboard! Use the menu to navigate,toggle the sidebar ,
+                or switch between light and dark themes to personnalize your
+                experience.
+            </p>
+            -->
+        </div>
+    </div>
+    
+    
 
-                <div class ="row g-3">
-                    colonnes 1
-                    <div class="col-md-4">
-                         Carte Bootstrap avec classe personnalisée "indicateur" et fond bleu (bg-primary) 
-                         <div class="card indicateur bg-primary text-white">
-                             Contenu de la carte 
-                             <div class="card-body">
-                                 Titre de l'indicateur avec icône emoji 
-                                    <h5 class="card-title"><i class="fa-solid fa-thumbs-up"></i>Taux de satisfactions ok</h5>
-                                     Valeur en pourcentage avec texte agrandi (fs-3 = font-size niveau 3) 
-                                     <p class="card-text fs-3">92%</p>
-                             </div>
-                         </div>
-                    </div>
-                </div>
-        </main>-->
+        
     </div>
     <script src="script.js"></script>
 </body>

@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #ece9e6, #ffffff);
+  font-family: 'Poppins', sans-serif;
+  color: #2c3e50;
+  padding: 40px 20px;
+}
+
+h2 {
+  font-weight: 600;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #34495e;
+  text-align: center;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+
+#contrat {
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 20px;
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.1),
+    inset 0 0 15px rgba(255,255,255,0.6);
+  background: #fefefe;
+  padding: 20px;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+}
+
+thead {
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  box-shadow: 0 4px 10px rgba(102,126,234,0.5);
+  color: white;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+thead th {
+  padding: 15px 20px;
+  border-right: 1px solid rgba(255,255,255,0.3);
+  position: relative;
+}
+
+thead th:last-child {
+  border-right: none;
+}
+
+tbody tr {
+  background: #ffffff;
+  transition: background-color 0.25s ease;
+  cursor: default;
+}
+
+tbody tr:nth-child(even) {
+  background: #f9f9fb;
+}
+
+tbody tr:hover {
+  background: #dde6f7;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(102,126,234,0.2);
+}
+
+tbody td {
+  padding: 15px 20px;
+  border-bottom: 1px solid #e1e6f9;
+  color: #34495e;
+  transition: color 0.25s ease;
+  text-align: center;
+}
+
+tbody td:first-child,
+tbody td.indicateur {
+  font-weight: 600;
+  color: #5a5a5a;
+  text-align: left;
+}
+
+td:nth-child(2) {
+  width: 120px;
+}
+
+input.kpi-min,
+input.kpi-max,
+span.kpi-min,
+span.kpi-max {
+  width: 60px;
+  box-sizing: border-box;
+  text-align: right;
+  border: none;
+  background: none;
+  outline: none;
+  display: inline-block;
+}
+
+button {
+  display: block;
+  margin: 30px auto 0;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  color: white;
+  padding: 12px 28px;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(102,126,234,0.5);
+  transition: background 0.3s ease;
+  user-select: none;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #764ba2, #667eea);
+}
