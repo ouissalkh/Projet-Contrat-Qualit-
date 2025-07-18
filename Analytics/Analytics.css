@@ -1,0 +1,41 @@
+body {
+      background: #f8f9fa;
+      font-family: 'Poppins', sans-serif;
+      padding: 40px;
+    }
+
+    .card {
+      width: 280px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: auto;
+    }
+
+    .icon {
+      font-size: 28px;
+      background-color: #e9f5ff;
+      color: #007bff;
+      padding: 16px;
+      border-radius: 50%;
+    }
+
+    .info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .info h4 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .info p {
+      margin: 0;
+      color: #555;
+      font-weight: bold;
+    }

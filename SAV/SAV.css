@@ -153,7 +153,7 @@ tfoot td:first-child {
   background-color: #667eea;
   color: white;
   font-weight: 700;
-  border-radius: 4px;
+  border-radius: 5px;
 }
 /* Forcer l'affichage et l'alignement de la colonne Bonus (7ème colonne) */
 table th:nth-child(7),
