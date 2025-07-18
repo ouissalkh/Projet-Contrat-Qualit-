@@ -1,25 +1,34 @@
+//Fonction pour calculer le bonus
 function calculerBonus() {
+  //pour selectionner tout les lignes tr de body
   const rows = document.querySelectorAll('tbody tr');
+  //initialise une variable totalBonus pour calculer le bonus
   let totalBonus = 0;
 
+  //parcourir chaque ligne du tableau par index
   rows.forEach((row, index) => {
     // Ignore les lignes qui ne contiennent pas de 'points-max'
     const pointsMaxSpan = row.querySelector('.points-max');
     if (!pointsMaxSpan) {
+      //si l'element qui correspond n'existe pas affiche ce messg
       console.log(`Ligne ${index} ignorée (pas de points-max)`);
       return;
     }
 
+    //selectionner la 2eme cellule de la ligne 
     const resultatCell = row.cells[1];
+    //selectionne l'element qui contient le id kpi-min
     const kpiMinSpan = row.querySelector('.kpi-min');
+    //selectionne l'element qui contient le id kpi-min
     const kpiMaxSpan = row.querySelector('.kpi-max');
-    const bonusCell = row.cells[6]; // 7e colonne = bonus
+    // 7e colonne = bonus
+    const bonusCell = row.cells[6]; 
 
     if (!resultatCell || !kpiMinSpan || !kpiMaxSpan || !bonusCell) {
       console.warn(`Ligne ${index} éléments manquants`);
       return;
     }
-
+    
     let resultat = parseFloat(resultatCell.textContent.replace('%', '').replace(',', '.')) || 0;
     let kpiMin = parseFloat(kpiMinSpan.textContent.replace('%', '').replace(',', '.'));
     let kpiMax = parseFloat(kpiMaxSpan.textContent.replace('%', '').replace(',', '.'));
@@ -32,7 +41,7 @@ function calculerBonus() {
     } else if (kpiMax < kpiMin) {
       bonus = ((kpiMin - resultat) / (kpiMin - kpiMax)) * pointsMax;
     }
-
+    // Limite le bonus à la plage [0, pointsMax].
     bonus = Math.max(0, Math.min(bonus, pointsMax));
 
     bonusCell.textContent = bonus.toFixed(2);
