@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Analyse des indicateurs</title>
+  <link rel="stylesheet" href="Analytics.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <h2>Analyse des indicateurs</h2>
+
+  <!-- 🔍 Barre de recherche -->
+<!-- <input type="text" id="searchInput" placeholder="🔍 Rechercher un indicateur..." oninput="filtrerCartes()"> -->
+
+  <!-- 📊 Cartes indicateurs -->
+  <div class="indicateur-cards">
+    <div class="card">
+      <h3>OK</h3>
+      <p>75%</p>
+    </div>
+    <div class="card">
+      <h3>NOK</h3>
+      <p>60%</p>
+    </div>
+    <div class="card">
+      <h3>OK</h3>
+      <p>80%</p>
+    </div>
+    <div class="card">
+      <h3>OK</h3>
+      <p>30%</p>
+    </div>
+  </div>
+
+  <!-- 🎯 Graphiques -->
+  <div class="charts">
+    <canvas id="barChart"></canvas>
+    <canvas id="pieChart"></canvas>
+  </div>
+
+  <script src="Analytics.js"></script>
+</body>
+</html>
