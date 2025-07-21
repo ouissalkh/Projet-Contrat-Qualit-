@@ -372,11 +372,19 @@ body.dark-theme .theme-toggle-track .theme-toggle-indicator {
     left: 0;
     z-index: 1000;
     flex-direction: column;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    
+    transform: translateY(5px);
+    pointer-events: none;
 }
 
 /* Show submenu on hover */
 .menu-item.dropdown:hover .submenu {
     display: flex;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
 }
 
 /* Submenu links */
@@ -417,3 +425,9 @@ body.dark-theme .submenu-link {
 .menu-item.dropdown:hover .submenu {
   display: flex;
 }
+#pieChart {
+  width: 100px;
+  height: 100px;
+  max-width: 100%;
+}
+

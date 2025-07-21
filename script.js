@@ -118,3 +118,31 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+// charger analytics.html 
+document.addEventListener("DOMContentLoaded", () => {
+  const links = document.querySelectorAll(".menu-link[data-page]");
+  const contenu = document.getElementById("contenu");
+
+  links.forEach(link => {
+    link.addEventListener("click", async (e) => {
+      e.preventDefault();
+
+      let page = link.dataset.page; // par exemple "Analytics"
+
+      // Construire le chemin complet
+      const path = `${page}/${page}.html`; // "Analytics/Analytics.html"
+
+      try {
+        const response = await fetch(path);
+        if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
+
+        const html = await response.text();
+        contenu.innerHTML = html;
+      } catch (err) {
+        contenu.innerHTML = `<p style="color:red;">Erreur lors du chargement de la page: ${err.message}</p>`;
+        console.error(err);
+      }
+    });
+  });
+});

@@ -3,8 +3,8 @@ const labels = ['OK', 'NOK', 'OK', 'OK'];
 // les valeurs des etiquètes
 const dataValues = [75, 60, 80, 30];
 const colors = dataValues.map(val => {
-  if (val >= 85) return '#2ecc71';
-  if (val >= 60) return '#f39c12';
+  if (val >= 85) return '#229351ff';
+  if (val >= 40) return '#229351ff';
   return '#e74c3c';
 });
 
