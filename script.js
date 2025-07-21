@@ -128,10 +128,8 @@ document.addEventListener("DOMContentLoaded", () => {
     link.addEventListener("click", async (e) => {
       e.preventDefault();
 
-      let page = link.dataset.page; // par exemple "Analytics"
-
-      // Construire le chemin complet
-      const path = `${page}/${page}.html`; // "Analytics/Analytics.html"
+      let page = link.dataset.page; // ex: "Analytics"
+      const path = `${page}/${page}.html`; // ex: "Analytics/Analytics.html"
 
       try {
         const response = await fetch(path);
@@ -139,6 +137,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const html = await response.text();
         contenu.innerHTML = html;
+
+        // Si le contenu contient du JS ou des graphiques (Chart.js), il faut recharger les scripts manuellement
+        const scripts = contenu.querySelectorAll("script");
+        scripts.forEach(oldScript => {
+          const newScript = document.createElement("script");
+          newScript.src = oldScript.src;
+          newScript.textContent = oldScript.textContent;
+          document.body.appendChild(newScript);
+          oldScript.remove();
+        });
       } catch (err) {
         contenu.innerHTML = `<p style="color:red;">Erreur lors du chargement de la page: ${err.message}</p>`;
         console.error(err);
@@ -146,3 +154,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
