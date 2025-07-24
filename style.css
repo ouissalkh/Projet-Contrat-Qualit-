@@ -21,6 +21,15 @@
     --color-shadow: rgba(0, 0, 0, 0.05);
 }
 
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; /* empêche tout scroll global */
+  
+}
+
+
 body.dark-theme {
     /* Dark theme colors */
     --color-text-primary: #F1F5F9;
@@ -41,10 +50,11 @@ body {
 
 /* Sidebar styles */
 .sidebar {
-    position: sticky;
+    position: fixed;
     top: 0;
     height: 100vh;
     width: 270px;
+    left: 0; /* Toujours collée à gauche */
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
@@ -52,7 +62,9 @@ body {
     border-right: 1px solid var(--color-border-hr);
     box-shadow: 0 3px 9px var(--color-shadow);
     transition: width 0.4s ease;
-}
+    z-index: 100; /* Pour qu'elle soit au-dessus du contenu */
+    
+    }
 
 .sidebar.collapsed {
     width: 90px;
@@ -119,8 +131,10 @@ body {
 
 .sidebar .sidebar-content {
     flex: 1;
+    max-height: 100vh;
+     overflow: hidden; /* Pas de scroll, ni horizontal ni vertical */
     padding: 20px 18px;
-    overflow: hidden auto;
+    overflow: hidden ;
     scrollbar-width: thin;
     scrollbar-color: var(--color-text-placeholder) transparent;
 }
@@ -303,10 +317,22 @@ body.dark-theme .theme-toggle-track .theme-toggle-indicator {
     display: flex;
 }
 
+
 .container .main-content {
-    flex: 1;
-    padding: 30px;
-    color: var(--color-text-primary);
+  margin-left: 270px; /* laisse la place à la sidebar */
+  flex-grow: 1;
+  padding: 20px 30px;
+  color: var(--color-text-primary);
+  overflow-y: auto;  /* scroll vertical si besoin */
+  overflow-x: hidden; /* pas de scroll horizontal */
+  height: 100vh;
+  transition: margin-left 0.4s ease;
+}
+
+/* Quand la sidebar est réduite */
+.sidebar.collapsed ~ .container .main-content,
+.sidebar.collapsed + .main-content {
+  margin-left: 90px;
 }
 
 .container .page-title {
@@ -372,19 +398,11 @@ body.dark-theme .theme-toggle-track .theme-toggle-indicator {
     left: 0;
     z-index: 1000;
     flex-direction: column;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    opacity: 0;
-    
-    transform: translateY(5px);
-    pointer-events: none;
 }
 
 /* Show submenu on hover */
 .menu-item.dropdown:hover .submenu {
     display: flex;
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
 }
 
 /* Submenu links */
@@ -414,7 +432,7 @@ body.dark-theme .submenu-link {
 }
 
 .sidebar-content {
-  overflow: visible; /* au lieu de hidden auto */
+  overflow: hidden; /* au lieu de hidden auto */
 }
 
 
@@ -425,9 +443,73 @@ body.dark-theme .submenu-link {
 .menu-item.dropdown:hover .submenu {
   display: flex;
 }
-#pieChart {
-  width: 100px;
-  height: 100px;
-  max-width: 100%;
+/* === Footer Links in Sidebar === */
+.sidebar-footer .menu-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 15px;
+  border-radius: 8px;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition: 0.3s ease;
+  font-size: 14px;
 }
 
+.sidebar-footer .menu-link:hover {
+  background: var(--color-hover-primary);
+  color: #fff;
+}
+
+.sidebar-footer .menu-link .material-symbols-rounded {
+  font-size: 20px;
+}
+
+/* Responsive when sidebar is collapsed */
+.sidebar.collapsed .sidebar-footer .menu-label {
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s ease;
+}
+
+.sidebar-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px 15px;
+  border-top: 1px solid var(--color-border);
+}
+/* Couleur et apparence des nouveaux éléments */
+.menu-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: background 0.3s, color 0.3s;
+}
+
+.menu-link:hover {
+  background: #f0f0f0;
+  color: var(--color-primary);
+}
+
+/* Icône et label */
+.menu-link .material-symbols-rounded {
+  font-size: 20px;
+}
+
+/* Élément actif (cliqué) */
+.menu-link.active {
+  background: var(--color-primary);
+  color: #fff;
+}
+/* .main-content {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;  ✅ autoriser scroll si contenu dépasse 
+  overflow-x: hidden; ❌ pas de scroll horizontal
+  height: 100vh;
+} */

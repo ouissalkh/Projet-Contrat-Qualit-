@@ -1,113 +1,126 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <title>Contrat Qualité - SAV</title>
-  <link rel="stylesheet" href="SAV.css" />
-</head>
-<body>
+<!-- Contenu de SAV/SAV.html (fragment HTML sans <html>, <head>, <body>) -->
 
-  <h2>Contrat Qualité SAV</h2>
-
-  <div id="contrat">
-    <table>
-      <thead>
-        <tr>
-          <th>Indicateur</th>
-          <th>Résultat</th>
-          <th>Répartition des RDV</th>
-          <th>KPI min</th>
-          <th>KPI max</th>
-          <th>Points MAX</th>
-          <th>Bonus</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="indicateur">Taux de CR OK</td>
-          <td>78,20%</td>
-          <td>-</td>
-          <td><span class="kpi-min">78%</span></td>
-          <td><span class="kpi-max">86%</span></td>
-          <td><span class="points-max">3</span></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td class="indicateur">Délai de prise RDV SAV</td>
-          <td>92,48%</td>
-          <td>-</td>
-          <td><span class="kpi-min">91%</span></td>
-          <td><span class="kpi-max">96%</span></td>
-          <td><span class="points-max">4</span></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td class="indicateur">Sécurisation de RDV</td>
-          <td>3,76%</td>
-          <td>-</td>
-          <td><span class="kpi-min">4%</span></td>
-          <td><span class="kpi-max">0%</span></td>
-          <td><span class="points-max">3</span></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td class="indicateur">Délai de traitement Audit PM</td>
-          <td>1</td>
-          <td>-</td>
-          <td><span class="kpi-min">3</span></td>
-          <td><span class="kpi-max">1</span></td>
-          <td><span class="points-max">2</span></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td class="indicateur">CLIENTS TRES INSATISFAIT</td>
-          <td>10,27%</td>
-          <td>-</td>
-          <td><span class="kpi-min">15%</span></td>
-          <td><span class="kpi-max">5%</span></td>
-          <td><span class="points-max">3</span></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td class="indicateur">CONFIRMITE DE CR</td>
-          <td>3,71%</td>
-          <td>-</td>
-          <td><span class="kpi-min">5%</span></td>
-          <td><span class="kpi-max">1%</span></td>
-          <td><span class="points-max">3</span></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td class="indicateur">DELAI TRAITEMENT REMISE EN ETAT</td>
-          <td>29,28</td>
-          <td>-</td>
-          <td><span class="kpi-min">9</span></td>
-          <td><span class="kpi-max">3</span></td>
-          <td><span class="points-max">2</span></td>
-          <td></td>
-        </tr>
-
-        <!-- Ligne vide pour afficher somme points max -->
-        <tr>
-          <td></td><td></td><td></td><td></td><td></td>
-          <td id="total-points-max"></td>
-          <td></td>
-        </tr>
-
-        <!-- Résultat contrat qualité -->
-        <tr>
-          <td><strong>Résultat contrat qualité</strong></td>
-          <td></td><td></td><td></td><td></td><td></td>
-          <td>?</td>
-        </tr>
-      </tbody>
-    </table>
+<div class="header">
+  <div class="header-left">
+    <i class="fa fa-home"></i>
+    <span class="breadcrumb"></span>
+    <span class="page-title">Analytics</span>
+    <i class="fa fa-random">SAV</i>
   </div>
 
-  <button onclick="exporterPDF()">Exporter le contrat en PDF</button>
+  <div class="header-right">
+    <div class="search-box">
+      <i class="fa fa-search"></i>
+      <input type="text" placeholder="Type here..." />
+    </div>
+    
+    <div class="signin">
+      <span class="material-symbols-rounded" style="font-size: 20px; vertical-align: middle;">account_circle</span>
+      <span style="margin-left: 5px;">Sign in</span>
+      <i class="fa fa-cog" style="margin-left: 10px;"></i>
+    </div>
 
-  <script src="SAV.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <button class="settings-btn" title="Paramètres">
+      <span class="material-symbols-rounded">settings</span>
+    </button>
+  </div>
+</div>
 
-</body>
-</html>
+<h2>Contrat Qualité SAV</h2>
+
+<div id="contrat">
+  <table>
+    <thead>
+      <tr>
+        <th>Indicateur</th>
+        <th>Résultat</th>
+        <th>Répartition des RDV</th>
+        <th>KPI min</th>
+        <th>KPI max</th>
+        <th>Points MAX</th>
+        <th>Bonus</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="indicateur">Taux de CR OK</td>
+        <td>78,20%</td>
+        <td>-</td>
+        <td><span class="kpi-min">78%</span></td>
+        <td><span class="kpi-max">86%</span></td>
+        <td><span class="points-max">3</span></td>
+        <td class="bonus-cell"></td>
+      </tr>
+      <tr>
+        <td class="indicateur">Délai de prise RDV SAV</td>
+        <td>92,48%</td>
+        <td>-</td>
+        <td><span class="kpi-min">91%</span></td>
+        <td><span class="kpi-max">96%</span></td>
+        <td><span class="points-max">4</span></td>
+        <td class="bonus-cell"></td>
+      </tr>
+      <tr>
+        <td class="indicateur">Sécurisation de RDV</td>
+        <td>3,76%</td>
+        <td>-</td>
+        <td><span class="kpi-min">4%</span></td>
+        <td><span class="kpi-max">0%</span></td>
+        <td><span class="points-max">3</span></td>
+        <td class="bonus-cell"></td>
+      </tr>
+      <tr>
+        <td class="indicateur">Délai de traitement Audit PM</td>
+        <td>1</td>
+        <td>-</td>
+        <td><span class="kpi-min">3</span></td>
+        <td><span class="kpi-max">1</span></td>
+        <td><span class="points-max">2</span></td>
+        <td class="bonus-cell"></td>
+      </tr>
+      <tr>
+        <td class="indicateur">CLIENTS TRES INSATISFAIT</td>
+        <td>10,27%</td>
+        <td>-</td>
+        <td><span class="kpi-min">15%</span></td>
+        <td><span class="kpi-max">5%</span></td>
+        <td><span class="points-max">3</span></td>
+        <td class="bonus-cell"></td>
+      </tr>
+      <tr>
+        <td class="indicateur">CONFIRMITE DE CR</td>
+        <td>3,71%</td>
+        <td>-</td>
+        <td><span class="kpi-min">5%</span></td>
+        <td><span class="kpi-max">1%</span></td>
+        <td><span class="points-max">3</span></td>
+        <td class="bonus-cell"></td>
+      </tr>
+      <tr>
+        <td class="indicateur">DELAI TRAITEMENT REMISE EN ETAT</td>
+        <td>29,28</td>
+        <td>-</td>
+        <td><span class="kpi-min">9</span></td>
+        <td><span class="kpi-max">3</span></td>
+        <td><span class="points-max">2</span></td>
+        <td class="bonus-cell"></td>
+      </tr>
+
+      <!-- Ligne vide pour afficher somme points max -->
+      <tr>
+        <td></td><td></td><td></td><td></td><td></td>
+        <td id="total-points-max"></td>
+        <td class="bonus-cell">-</td>
+      </tr>
+
+      <!-- Résultat contrat qualité -->
+      <tr>
+        <td><strong>Résultat contrat qualité</strong></td>
+        <td></td><td></td><td></td><td></td><td></td>
+        <td id="total-bonus" class="bonus-cell">?</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<button onclick="exporterPDF()">Exporter le contrat en PDF</button>

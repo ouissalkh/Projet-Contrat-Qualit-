@@ -65,3 +65,21 @@ function filtrerCartes() {
     carte.style.display = titre.includes(filtre) ? 'block' : 'none';
   });
 }
+// pour le boutton sav racc
+  // Gestion du bouton pour afficher/masquer le menu déroulant
+  const toggleBtn = document.getElementById('toggle-menu');
+  const dropdown = document.getElementById('dropdown-menu');
+
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation(); // pour ne pas déclencher le clic sur document
+    if (dropdown.style.display === 'block') {
+      dropdown.style.display = 'none';
+    } else {
+      dropdown.style.display = 'block';
+    }
+  });
+
+  // Fermer le menu si clic en dehors
+  document.addEventListener('click', () => {
+    dropdown.style.display = 'none';
+  });
