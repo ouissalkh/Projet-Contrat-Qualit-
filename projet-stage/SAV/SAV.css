@@ -1,0 +1,458 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+  /* margin: 0;
+  background: linear-gradient(135deg, #ece9e6, #ffffff);
+  font-family: 'Poppins', sans-serif;
+  color: #2c3e50;
+  padding: 40px 20px;
+  overflow-x: hidden;
+  
+  background: linear-gradient(135deg, #e0eafc,#cfdef3);
+  height: 100vh; */
+  
+  background: linear-gradient(135deg, #e0eafc,#cfdef3);
+  font-family: 'Poppins', sans-serif;
+  color: #2c3e50;
+  overflow-x: hidden;
+  margin: 0 !important;
+  padding: 0 !important;
+  padding-top: 70px; /* espace sous la navbar fixe */
+  overflow-y: auto;
+}
+
+h2 {
+  
+  margin-top: 30px; /* espace entre la barre et le h2 */
+  font-weight: 600;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  margin: 0 0 30px 0;
+  color: #34495e;
+  text-align: center;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+  scroll-margin-top: 80px; /* un peu plus que la hauteur navbar */
+  opacity: 1 !important; /* forcer visible */
+  animation: fadeIn 0.7s ease forwards;
+  opacity: 0;
+}
+
+#contrat {
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 20px;
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.1),
+    inset 0 0 15px rgba(255,255,255,0.6);
+  background: #fefefe;
+  padding: 20px;
+  overflow-x: auto;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+table {
+  
+  width: 100%;
+  table-layout: auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 20px;
+  word-wrap: break-word;
+  overflow-wrap: break-word; 
+  border: 4px solid transparent ;
+  background-clip: padding-box;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+}
+
+thead {
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  box-shadow: 0 4px 10px rgba(102,126,234,0.5);
+  color: white;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+thead th {
+  padding: 10px 20px;
+  border-right: 1px solid rgba(255,255,255,0.3);
+  position: relative;
+  white-space: nowrap;
+}
+
+thead th:last-child {
+  border-right: none;
+  
+}
+
+tbody tr {
+  background: #ffffff;
+  transition: background-color 0.25s ease;
+  cursor: default;
+}
+
+tbody tr:nth-child(even) {
+  background: #f9f9fb;
+}
+
+tbody tr:hover {
+  background: #dde6f7;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(102,126,234,0.2);
+}
+
+tbody td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #e1e6f9;
+  color: #34495e;
+  transition: color 0.25s ease;
+  text-align: center;
+}
+
+tbody td:first-child,
+tbody td.indicateur {
+  font-weight: 600;
+  color: #5a5a5a;
+  text-align: left;
+}
+
+td:nth-child(2) {
+  width: 120px;
+}
+
+input.kpi-min,
+input.kpi-max,
+span.kpi-min,
+span.kpi-max {
+  width: 60px;
+  box-sizing: border-box;
+  text-align: right;
+  border: none;
+  background: none;
+  outline: none;
+  display: inline-block;
+}
+
+button {
+  display: block;
+  margin: 30px auto 0;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  color: white;
+  padding: 12px 28px;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(102,126,234,0.5);
+  transition: background 0.3s ease;
+  user-select: none;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #764ba2, #667eea);
+}
+
+tfoot td {
+  font-weight: 700;
+  font-size: 1rem;
+  background-color: #f0f0f0;
+  color: #333;
+  border-top: 2px solid #667eea;
+  padding: 15px 20px;
+  text-align: center;
+}
+
+tfoot td:first-child {
+  text-align: left;
+}
+#total-points-max {
+  background-color: #667eea;
+  color: white;
+  font-weight: 700;
+  border-radius: 5px;
+}
+/* Forcer l'affichage et l'alignement de la colonne Bonus (7ème colonne) */
+table th:nth-child(7),
+table td:nth-child(7) {
+  display: table-cell;
+  text-align: center;
+  /* facultatif : largeur minimum */
+  min-width: 80px;
+  /* facultatif : couleur pour mieux voir */
+  /* background-color: #f0f8ff; */
+}
+th.indicateur, td.indicateur {
+  white-space: normal; /* Permet retour à la ligne si nécessaire */
+  min-width: 250px;     /* Tu peux ajuster selon ton texte */
+  width: 30%;           /* Facultatif mais ça aide à fixer une proportion */
+  text-align: left;
+  vertical-align: top;
+  padding: 8px 10px;
+}
+#contrat {
+  
+  max-width: 100vw; /* largeur max de l'écran */
+  overflow-x: hidden; /* empêche le scroll horizontal */
+  padding: 10px;
+  padding-top: 20px; /* ou plus si besoin */
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins" ,sans-serif;
+}
+/* css pour la barre de navigation */
+/* .navbar {
+  
+  position: fixed;    /* fixe la navbar en haut 
+  top: 0;
+  left: 5px;
+  width: 100%; /* prend toute la largeur 
+  height: 70px;/* hauteur fixe  
+  background: rgba(255,255,255,0.15); /*font blanc semi transparent
+  backdrop-filter: blur(10px);/*flou d'arrière-plan
+  -webkit-backdrop-filter: blur(10px);/*compatibilité Safari
+  border: 1px solid rgba(255, 255, 255, 0.2); /*fine brodure simple
+  border-radius: 0 0 16px 16px;*coins arrondis en bas
+  display: flex; /* felxbox horizontal
+  align-items: center;
+  justify-content: space-between; /*espace entre lodo et boutton
+  padding: 0 30px; /*marges internes horizontales
+  color:#333;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1); /*ombre douce
+  animation: slideDown 0.5s ease; /* animation d'apparition
+  margin-bottom: 0px;
+  z-index: 999;       /* pour la garder au-dessus 
+}
+/* style pour le titre 
+.logo{
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #111827;
+}
+
+/* la zone droite de la nav 
+.nav-right{
+  /* Regroupe search + icônes avec un espacement de 18px entre eux 
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.search-box{
+  position: relative;
+}
+.search-box input{
+  padding: 8px 12px 8px 34px;
+  border-radius: 20px;
+  border: none;
+  background-color: rgba(255,255,255,0.7);
+  outline: none;
+  transition: 0.3s;
+  /* Champ de recherche avec coins arrondis,
+   fond clair semi-transparent, sans bord. 
+}
+
+
+.search-box i{
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: #666;
+  font-size: 14px;
+  /* Positionne l’icône de recherche à l’intérieur du champ,
+   à gauche et verticalement centrée. 
+}
+
+/* boutons icônes : profil & paramètres 
+.icon-btn{
+  background: transparent;
+  border: none;
+  margin-top: auto;
+  font-size: 0.7rem;
+  cursor: pointer;
+  color: #111;
+  transition: all 0.3s ease;
+  /* Boutons icônes minimalistes, sans fond ni bord, 
+  avec effet de transition au survol. 
+}
+
+
+.icon-btn:hover{
+  color: #f5f6f7; 
+  transform: scale(1) ; /*effet zoom
+
+}
+
+/* animation d’apparition 
+@keyframes slideDown {
+  from{
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to{
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* Crée une animation glissée 
+  du haut vers le bas utilisée pour .navbar. 
+}
+
+
+/* responsive mobile 
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 15px;
+    align-items: flex-start;
+    gap: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999; /* Pour qu'elle reste au-dessus de tout 
+    background-color: white; /* ou autre selon ton thème 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* optionnel : petite ombre 
+  }
+
+  .nav-right {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .search-box input {
+    width: 100%;
+  }
+}
+
+/* h2 {
+  font-weight: 600;
+  font-size: 2.2rem;
+  margin: 30px 0;
+  color: #2c3e50;
+  text-align: center;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.05);
+  animation: fadeIn 0.7s ease forwards;
+  opacity: 0;
+}
+h2 {
+  animation: fadeIn 0.7s ease forwards;
+  opacity: 0;
+} 
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  max-width: 60%; /* <-- limite la taille de la zone à droite 
+  justify-content: flex-end;  pousse les icônes à droite 
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+.search-box input {
+  width: 160px; /* <-- fixe une largeur raisonnable 
+  max-width: 100%;
+} */
+
+/* css pour le barre de nav */
+/* Header */
+.header {
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background-color: #695cfe; */
+  color: white;
+  padding: 0 30px;
+  height: 60px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.page-title {
+  font-size: 24px;
+  color: #ffffff;
+  margin: 0;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.search-box {
+  position: relative;
+}
+
+.search-box input {
+  padding: 8px 12px 8px 35px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  width: 180px;
+}
+
+.search-box i {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: #999;
+}
+
+.signin {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.signin .material-symbols-rounded {
+  font-size: 22px;
+  vertical-align: middle;
+}
+
+.settings-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease;
+  margin-top: auto;
+}
+
+.settings-btn:hover {
+  color: #66affc;
+}

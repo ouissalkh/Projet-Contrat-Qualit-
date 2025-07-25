@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <!-- Lib XLSX pour Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- Lib jsPDF + autoTable pour PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Material Symbols -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="Racc/RACC.js" defer></script>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #e0eafc, #cfdef3);
+    font-family: 'Poppins', sans-serif;
+    color: #2c3e50;
+    overflow-x: hidden; /* Empêche le scroll horizontal sur le corps */
+    margin: 0 !important;
+    padding: 0 !important;
+    padding-top: 70px;
+    overflow-y: auto;
+}
+
+h2 {
+    font-weight: 400;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    margin: 0 0 30px 0;
+    color: #34495e;
+    text-align: center;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    scroll-margin-top: 80px;
+}
+
+#contrat {
+    max-width: 900px; /* Largeur maximale du conteneur du tableau, réduite */
+    margin: 20px auto; /* Centre le conteneur */
+    padding: 10px;
+    padding-top: 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1), inset 0 0 15px rgba(255,255,255,0.6);
+    background: #fefefe;
+    overflow-x: hidden; /* Empêche le scroll horizontal à l'intérieur de ce conteneur */
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.table-container {
+    overflow-x: hidden; /* Empêche le scroll horizontal sur le conteneur du tableau */
+    margin: 20px auto; /* Centre le conteneur du tableau */
+    max-width: 900px; /* Assure que le tableau ne dépasse pas cette largeur */
+}
+
+table {
+    width: 100%; /* Le tableau prend toute la largeur de son conteneur */
+    table-layout: fixed; /* Largeurs de colonnes fixes */
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 20px;
+    border: 4px solid transparent;
+    background-clip: padding-box;
+    overflow: hidden; /* Cache le contenu qui dépasse des cellules */
+    box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+    font-size: 0.7rem; /* Taille de police générale du tableau */
+    letter-spacing: 0.01em;
+}
+
+/* Largeurs optimisées pour chaque colonne (en pourcentages pour s'adapter) */
+table th:nth-child(1), table td:nth-child(1) { width: 20%; } /* Réduit pour la première colonne */
+table th:nth-child(2), table td:nth-child(2) { width: 18%; } /* Augmenté pour les noms de zone */
+table th:nth-child(3), table td:nth-child(3) { width: 10%; }
+table th:nth-child(4), table td:nth-child(4) { width: 15%; }
+table th:nth-child(5), table td:nth-child(5) { width: 10%; }
+table th:nth-child(6), table td:nth-child(6) { width: 10%; }
+table th:nth-child(7), table td:nth-child(7) { width: 9%; }
+table th:nth-child(8), table td:nth-child(8) { width: 8%; }
+/* Total: 20+18+10+15+10+10+9+8 = 100% */
+
+/* Styles pour l'en-tête du tableau */
+table tr:first-child {
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    box-shadow: 0 4px 10px rgba(102,126,234,0.5);
+    color: white;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 0.65rem;
+}
+
+table tr:first-child th {
+    padding: 8px 4px;
+    border-right: 1px solid rgba(255,255,255,0.3);
+    position: relative;
+    color: white;
+    white-space: nowrap; /* Texte sur une seule ligne */
+    overflow: hidden; /* Cache le débordement */
+    text-overflow: clip; /* Pas de points de suspension */
+    line-height: 1.1;
+    vertical-align: middle;
+}
+
+table tr:first-child th:last-child {
+    border-right: none;
+}
+
+/* Styles pour les lignes du corps du tableau */
+table tr:not(:first-child) {
+    background: #ffffff;
+    transition: background-color 0.25s ease;
+    cursor: default;
+}
+
+table tr:not(:first-child):nth-child(even) {
+    background: #f9f9fb;
+}
+
+table tr:not(:first-child):hover {
+    background: #dde6f7;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(102,126,234,0.2);
+}
+
+table tr:not(:first-child) td {
+    padding: 8px 4px;
+    border-bottom: 1px solid #e1e6f9;
+    color: #34495e;
+    transition: color 0.25s ease;
+    text-align: center;
+    white-space: nowrap; /* Texte sur une seule ligne */
+    overflow: hidden; /* Cache le débordement */
+    text-overflow: clip; /* Pas de points de suspension */
+    line-height: 1.2;
+    vertical-align: middle;
+    font-size: 0.7rem;
+}
+
+table tr:not(:first-child) td:first-child,
+table tr:not(:first-child) td.indicateur {
+    font-weight: 600;
+    color: #5a5a5a;
+    text-align: left;
+    font-size: 0.65rem;
+    padding-left: 6px;
+}
+
+/* Spécifique pour la deuxième colonne pour s'assurer qu'elle est sur une ligne */
+table td:nth-child(2) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip; /* Pas de points de suspension */
+    font-size: 0.68rem; /* Légèrement plus petit si nécessaire */
+}
+
+
+/* Classes pour les inputs et spans KPI */
+input.kpi-min,
+input.kpi-max,
+span.kpi-min,
+span.kpi-max {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    border: none;
+    background: none;
+    outline: none;
+    display: inline-block;
+    font-size: 0.65rem;
+}
+
+/* Classes pour les différents types de cellules */
+.pointsMax {
+    font-weight: 600;
+    color: #667eea;
+}
+
+.repartition {
+    font-weight: 500;
+    color: #764ba2;
+}
+
+.Bonus,
+.performance,
+.ResultatBonus {
+    font-weight: 600;
+    color: #27ae60;
+    background-color: rgba(39, 174, 96, 0.1);
+}
+
+.repar_hors {
+    font-weight: 500;
+    color: #e74c3c;
+}
+
+.MaxOKHORSRANG,
+.ResulatMax {
+    font-weight: 600;
+    color: #f39c12;
+}
+
+button {
+    display: block;
+    margin: 30px auto 0;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: none;
+    color: white;
+    padding: 12px 28px;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(102,126,234,0.5);
+    transition: background 0.3s ease;
+    user-select: none;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #764ba2, #667eea);
+}
+
+/* Styles pour les boutons toggle */
+.toggle-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 11px;
+    color: #667eea;
+    margin-right: 4px;
+    padding: 1px 2px;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+    display: inline;
+    box-shadow: none;
+    margin: 0 2px 0 0;
+}
+
+.toggle-btn:hover {
+    background-color: rgba(102, 126, 234, 0.1);
+    color: #764ba2;
+}
+
+/* CSS pour la barre de navigation */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0 0 16px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    color: #333;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    animation: slideDown 0.5s ease;
+    margin-bottom: 0px;
+    z-index: 999;
+}
+
+/* Style pour le titre */
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #111827;
+}
+
+/* La zone droite de la nav */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    max-width: 60%;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    overflow: hidden;
+}
+
+.search-box {
+    position: relative;
+}
+
+.search-box input {
+    padding: 8px 12px 8px 34px;
+    border-radius: 20px;
+    border: none;
+    background-color: rgba(255,255,255,0.7);
+    outline: none;
+    transition: 0.3s;
+    width: 160px;
+    max-width: 100%;
+}
+
+.search-box i {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #666;
+    font-size: 14px;
+}
+
+/* Boutons icônes : profil & paramètres */
+.icon-btn {
+    background: transparent;
+    border: none;
+    margin-top: auto;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #111;
+    transition: all 0.3s ease;
+    margin: 0;
+    padding: 5px;
+}
+
+.icon-btn:hover {
+    color: #667eea;
+    transform: scale(1.1);
+}
+
+.child {
+    transition: all 0.3s ease-in-out;
+}
+
+tr.child.hidden {
+    opacity: 0;
+    transform: scaleY(0);
+    height: 0;
+    display: none !important;
+}
+
+/* Styles pour l'export */
+.export-btn-container {
+    position: relative;
+    display: inline-block;
+    margin: 20px auto;
+    text-align: center;
+    width: 100%;
+}
+
+.export-btn {
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+    margin: 0;
+}
+
+.export-btn:hover {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 8px;
+    z-index: 1;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 5px;
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-menu button {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 0;
+    margin: 0;
+    box-shadow: none;
+    font-size: 14px;
+}
+
+.dropdown-menu button:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown-menu button:first-child {
+    border-radius: 8px 8px 0 0;
+}
+
+.dropdown-menu button:last-child {
+    border-radius: 0 0 8px 8px;
+}
+
+/* Animations */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive mobile */
+@media (max-width: 600px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 15px;
+        align-items: flex-start;
+        gap: 10px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 999;
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .nav-right {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .search-box input {
+        width: 100%;
+    }
+    
+    body {
+        padding-top: 120px;
+    }
+    
+    #contrat {
+        padding: 5px;
+        margin: 0 auto; /* Centre le conteneur sur mobile aussi */
+        max-width: 95%; /* Un peu plus petit sur mobile */
+    }
+    
+    table {
+        font-size: 0.6rem;
+    }
+    
+    table tr:not(:first-child) td,
+    table tr:first-child th {
+        padding: 6px 2px;
+        font-size: 0.55rem;
+    }
+    
+    .toggle-btn {
+        font-size: 9px;
+    }
+}
+</style>
+</head>
+
+<body>
+    <!--  début de bar de nav -->
+   <!--<nav class="navbar">
+        <div class="logo">Kyntus Maroc</div>
+        <div class="nav-right">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Recherche...">
+            </div>
+            <button class="icon-btn" title="Profil">
+                <span class="material-symbols-rounded">account_circle</span>
+            </button>
+            <button class="icon-btn" title="Paramètres">
+                <span class="material-symbols-rounded">settings</span>
+            </button>
+        </div>
+    </nav>-->
+    <!-- fin de bar nav -->
+
+    <h2>Contrat Qualité RACC</h2>
+
+    <div id="contrat">
+        <label for="filterYear">Année : </label>
+        <select id="filterYear">
+            <option value="all">Toutes</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+        </select>
+
+        <label for="filterMonth" style="margin-left: 20px;">Mois : </label>
+        <select id="filterMonth">
+            <option value="all">Tous</option>
+            <option value="01">Janvier</option>
+            <option value="02">Février</option>
+            <option value="03">Mars</option>
+            <option value="04">Avril</option>
+            <option value="05">Mai</option>
+            <option value="06">Juin</option>
+            <option value="07">Juillet</option>
+            <option value="08">Août</option>
+            <option value="09">Septembre</option>
+            <option value="10">Octobre</option>
+            <option value="11">Novembre</option>
+            <option value="12">Décembre</option>
+        </select>
+
+        <button onclick="chargerTousLesTaux()">Filtrer</button>
+    </div>
+
+    <div class="table-container">
+        <table id="monTableau" border="1">
+            <tr>
+                <th contenteditable="true">Indicateur</th>
+                <th></th>
+                <th contenteditable="true">Resultat </th>
+                <th contenteditable="true">Repartition des KPI</th>
+                <th contenteditable="true">Point min KPI</th>
+                <th contenteditable="true">Point MAX KPI</th>
+                <th contenteditable="true">Points MAX</th>
+                <th contenteditable="true">Bonus</th>
+            </tr>
+
+            <tr class="parent" data-id="tauxCR">
+                <td contenteditable="true" colspan="2"><button class="toggle-btn">►</button>Taux de CR OK-1er RDV</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="child child-of-tauxCR">
+                <td></td>
+                <td contenteditable="true">Zone A PLP</td>
+                <td contenteditable="true" id="taux_zone_a_plp">---</td>
+                <td contenteditable="true" class="repartition">6.77%</td>
+                <td><span class="kpi-min">93%</span></td>
+                <td contenteditable="true">98%</td>
+                <td contenteditable="true" class="pointsMax">0.27</td>
+                <td id="bonus_zone_a_plp" class="Bonus">---</td>
+            </tr>
+            <tr class="child child-of-tauxCR">
+                <td></td>
+                <td contenteditable="true">Zone B PLP</td>
+                <td contenteditable="true" id="taux_zone_b_plp"> ---</td>
+                <td contenteditable="true" class="repartition">13.68%</td>
+                <td contenteditable="true">90%</td>
+                <td contenteditable="true">96%</td>
+                <td contenteditable="true" class="pointsMax">0.55</td>
+                <td id="bonus_zone_b_plp" class="Bonus">---</td>
+            </tr>
+            <tr class="child child-of-tauxCR">
+                <td></td>
+                <td contenteditable="true">Zone C PLP</td>
+                <td contenteditable="true" id="taux_zone_c_plp"> ---</td>
+                <td contenteditable="true" class="repartition">14.66%</td>
+                <td contenteditable="true">86%</td>
+                <td contenteditable="true">95%</td>
+                <td contenteditable="true" class="pointsMax">0.59</td>
+                <td id="bonus_zone_c_plp" class="Bonus">---</td>
+            </tr>
+            <tr class="child child-of-tauxCR">
+                <td></td>
+                <td contenteditable="true">Zone A HOTLINE</td>
+                <td contenteditable="true" id="taux_zone_a_hotline"> ---</td>
+                <td contenteditable="true" class="repartition">12.79%</td>
+                <td contenteditable="true">84%</td>
+                <td contenteditable="true">91%</td>
+                <td contenteditable="true" class="pointsMax">0.51</td>
+                <td id="bonus_zone_a_hotline" class="Bonus">---</td>
+            </tr>
+            <tr class="child child-of-tauxCR">
+                <td></td>
+                <td contenteditable="true">Zone B HOTLINE</td>
+                <td contenteditable="true" id="taux_zone_b_hotline"> ---</td>
+                <td contenteditable="true" class="repartition">8.88%</td>
+                <td contenteditable="true">77%</td>
+                <td contenteditable="true">88%</td>
+                <td contenteditable="true" class="pointsMax">0.36</td>
+                <td id="bonus_zone_b_hotline" class="Bonus">---</td>
+            </tr>
+            <tr class="child child-of-tauxCR">
+                <td></td>
+                <td contenteditable="true">Zone C HOTLINE</td>
+                <td contenteditable="true" id="taux_zone_c_hotline"> ---</td>
+                <td contenteditable="true" class="repartition">8.68%</td>
+                <td contenteditable="true">76%</td>
+                <td contenteditable="true">83%</td>
+                <td contenteditable="true" class="pointsMax">0.35</td>
+                <td id="bonus_zone_c_hotline" class="Bonus">---</td>
+            </tr>
+            <tr class="child child-of-tauxCR">
+                <td></td>
+                <td contenteditable="true">Zone A Construction</td>
+                <td contenteditable="true" id="taux_zone_a_construction"> ---</td>
+                <td contenteditable="true" class="repartition">9.48%</td>
+                <td contenteditable="true">78%</td>
+                <td contenteditable="true">86%</td>
+                <td contenteditable="true" class="pointsMax">0.38</td>
+                <td id="bonus_zone_a_construction" class="Bonus">---</td>
+            </tr>
+            <tr class="child child-of-tauxCR">
+                <td></td>
+                <td contenteditable="true">Zone B Construction</td>
+                <td contenteditable="true" id="taux_zone_b_construction"> ---</td>
+                <td contenteditable="true" class="repartition">13.68%</td>
+                <td contenteditable="true">74%</td>
+                <td contenteditable="true">84%</td>
+                <td contenteditable="true" class="pointsMax">0.55</td>
+                <td id="bonus_zone_b_construction" class="Bonus">---</td>
+            </tr>
+            <tr class="child child-of-tauxCR">
+                <td></td>
+                <td contenteditable="true">Zone C Construction</td>
+                <td contenteditable="true" id="taux_zone_c_construction">---</td>
+                <td contenteditable="true" class="repartition">11.40%</td>
+                <td contenteditable="true">68%</td>
+                <td contenteditable="true">78%</td>
+                <td contenteditable="true" class="pointsMax">0.46</td>
+                <td id="bonus_zone_c_construction" class="Bonus">---</td>
+            </tr>
+            <tr class="child child-of-tauxCR" style="background-color: #e8f4fd;">
+                <td></td>
+                <td contenteditable="true">Performance globale 1 er RDV</td>
+                <td> </td>
+                <td contenteditable="true" id="totalRepartition"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true" id="totalPointsMax"></td>
+                <td contenteditable="true" id="TotalBonus"></td>
+            </tr>
+
+            <tr class="parent" data-id="tauxCROKHORS">
+                <td contenteditable="true"> <button class="toggle-btn">►</button>Taux de CR OK-HORS RANG 1</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr  class="child child-of-tauxCROKHORS">
+                <td></td>
+                <td contenteditable="true"> zone A</td>
+                <td contenteditable="true" id="taux_hors_rang_a">---</td>
+                <td contenteditable="true" class="repar_hors">21.02%</td>
+                <td contenteditable="true">67%</td>
+                <td contenteditable="true">72%</td>
+                <td contenteditable="true" class="MaxOKHORSRANG">0.63</td>
+                <td class="performance">---</td>
+            </tr>
+            <tr class="child child-of-tauxCROKHORS">
+                <td></td>
+                <td contenteditable="true">Zone B</td>
+                <td contenteditable="true" id="taux_hors_rang_b">---</td>
+                <td contenteditable="true" class="repar_hors">34.63%</td>
+                <td contenteditable="true">63%</td>
+                <td contenteditable="true">68%</td>
+                <td contenteditable="true" class="MaxOKHORSRANG">1.04</td>
+                <td class="performance">---</td>
+            </tr>
+            <tr class="child child-of-tauxCROKHORS">
+                <td></td>
+                <td contenteditable="true"> Zone C</td>
+                <td contenteditable="true" id="taux_hors_rang_c">---</td>
+                <td contenteditable="true" class="repar_hors">44.35%</td>
+                <td contenteditable="true">57%</td>
+                <td contenteditable="true">63%</td>
+                <td contenteditable="true" class="MaxOKHORSRANG">1.33</td>
+                <td class="performance">---</td>
+            </tr>
+            <tr class="child child-of-tauxCROKHORS">
+                <td></td>
+                <td>Performance globale Hors Rang 1</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true" id="totalrep_hors"> </td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true" id ="totalMaxHORSRANG"></td>
+                <td contenteditable="true" id="totalPerformance"></td>
+            </tr>
+            <tr class="parent" data-id="tauxCRGLOBAL">
+                <td contenteditable="true"><button class="toggle-btn">►</button>Taux de CR OK Global</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="child child-of-tauxCRGLOBAL">
+                <td></td>
+                <td contenteditable="true">Performance globale</td>
+                <td contenteditable="true">70.88%</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">  </td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+            </tr>
+
+            <tr>
+                <td contenteditable="true">Délai de prise du 1er RDV</td>
+                <td></td>
+                <td contenteditable="true" id="delai_prise_1er_rdv">---</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">85%</td>
+                <td contenteditable="true">95%</td>
+                <td contenteditable="true" class="ResulatMax">3.00</td>
+                <td class="ResultatBonus">1.81</td>
+            </tr>
+
+            <tr>
+                <td contenteditable="true"> Taux de report</td>
+                <td></td>
+                <td contenteditable="true" id="taux_report">---</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">10%</td>
+                <td contenteditable="true">6%</td>
+                <td contenteditable="true" class="ResulatMax">2.00</td>
+                <td class="ResultatBonus"></td>
+            </tr>
+
+            <tr>
+                <td contenteditable="true"> Satcli (sur RDV OK)</td>
+                <td></td>
+                <td contenteditable="true">79.89%</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"> 85%</td>
+                <td contenteditable="true">95%</td>
+                <td contenteditable="true" class="ResulatMax">4.00</td>
+                <td class="ResultatBonus"></td>
+            </tr>
+
+            <tr>
+                <td contenteditable="true"> Satcli (sur RDV NOK)</td>
+                <td></td>
+                <td contenteditable="true">37.97%</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"> 35%</td>
+                <td contenteditable="true">60%</td>
+                <td contenteditable="true" class="ResulatMax">1.00</td>
+                <td class="ResultatBonus"></td>
+            </tr>
+
+            <tr>
+                <td contenteditable="true"> Transformation des GEM</td>
+                <td></td>
+                <td contenteditable="true">1.43%</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"> 3%</td>
+                <td contenteditable="true">1%</td>
+                <td contenteditable="true" class="ResulatMax">3.00</td>
+                <td class="ResultatBonus"></td>
+            </tr>
+
+            <tr>
+                <td rowspan="2" colspan="2" contenteditable="true"> Resultat contrat qualité</td>
+                <td colspan="4" contenteditable="true"></td>
+                <td contenteditable="true" id="TotalResulatMAX"></td>
+                <td contenteditable="true" id="TotalResultatBonus"></td>
+            </tr>
+
+            <tr>
+                <td colspan="5" contenteditable="true"></td>
+                <td contenteditable="true" id="resultat_contrat_qualite">98.16</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="export-btn-container">
+        <button class="export-btn" id="exportBtn">Exporter ▼</button>
+        <div class="dropdown-menu" id="exportMenu">
+            <button onclick="exportPDF()">Exporter en PDF</button>
+            <button onclick="exportExcel()">Exporter en Excel</button>
+        </div>
+    </div>
+
+    
+</body>
+</html>
